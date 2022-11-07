@@ -1,5 +1,11 @@
 package helper
 
+import (
+	"fmt"
+	"strconv"
+	"strings"
+)
+
 /*
 	1. func CheckIsPrime(int)(bool)
 	2. func GenerateID(prefix string, barang []Barang) (int)
@@ -30,3 +36,34 @@ package helper
 			output :
 				BAR-1
 */
+
+func CheckIsPrime(num int) (isPrime bool) {
+	for i := 2; i < num; i++ {
+		if num%i == 0 {
+			return false
+		}
+	}
+	return true
+}
+
+type Barang struct {
+	Id   string
+	Name string
+}
+
+func GenerateID(prefix string, barang *[]Barang) string {
+	newId := ""
+	for i, b := range *barang {
+		id := strings.Split(b.Id, "BAR-")[1]
+		idInt, _ := strconv.Atoi(id)
+		if idInt != (i + 1) {
+			newId = fmt.Sprintf("BAR-%v", i)
+		}
+	}
+
+	if newId == "" {
+		newId = fmt.Sprintf("%v-%v", prefix, len(*barang)+1)
+
+	}
+	return newId
+}
