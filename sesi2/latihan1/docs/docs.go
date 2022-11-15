@@ -99,6 +99,12 @@ const docTemplate = `{
                         "schema": {
                             "$ref": "#/definitions/views.CreateTodoSuccessSwag"
                         }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/views.CreateTodoFailureSwag"
+                        }
                     }
                 }
             }
@@ -124,6 +130,32 @@ const docTemplate = `{
                 "title": {
                     "type": "string",
                     "example": "Title TODO"
+                }
+            }
+        },
+        "views.CreateTodoFailureSwag": {
+            "type": "object",
+            "properties": {
+                "additional_info": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    },
+                    "example": {
+                        "error": "Title is required"
+                    }
+                },
+                "error": {
+                    "type": "string",
+                    "example": "BAD_REQUEST"
+                },
+                "message": {
+                    "type": "string",
+                    "example": "CREATE TODO FAIL"
+                },
+                "status": {
+                    "type": "integer",
+                    "example": 400
                 }
             }
         },
@@ -198,7 +230,7 @@ const docTemplate = `{
                 },
                 "status": {
                     "type": "integer",
-                    "example": 201
+                    "example": 200
                 }
             }
         }

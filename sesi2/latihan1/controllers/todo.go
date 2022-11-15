@@ -34,6 +34,7 @@ func GetAll(c *gin.Context) {
 // @Produce json
 // @Param request body request.CreateTodo  true  "Request Body"
 // @Success 200 {object} views.CreateTodoSuccessSwag
+// @Failure      400  {object}  views.CreateTodoFailureSwag
 // @Router /todos [post]
 func CreateTodo(c *gin.Context) {
 	var req request.CreateTodo

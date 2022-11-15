@@ -21,9 +21,15 @@ type CreateTodoSuccessSwag struct {
 	Message string            `json:"message" example:"CREATE TODO SUCCESS"`
 	Payload CreateTodoPayload `json:"payload"`
 }
+type CreateTodoFailureSwag struct {
+	Status         int               `json:"status" example:"400"`
+	Message        string            `json:"message" example:"CREATE TODO FAIL"`
+	Error          string            `json:"error" example:"BAD_REQUEST"`
+	AdditionalInfo map[string]string `json:"additional_info" example:"error:Title is required"`
+}
 
 type GetTodosSuccessSwag struct {
-	Status  int              `json:"status" example:"201"`
+	Status  int              `json:"status" example:"200"`
 	Message string           `json:"message" example:"CREATE TODO SUCCESS"`
 	Payload []GetTodoPayload `json:"payload"`
 }

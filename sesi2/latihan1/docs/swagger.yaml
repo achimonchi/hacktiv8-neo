@@ -15,6 +15,24 @@ definitions:
         example: Title TODO
         type: string
     type: object
+  views.CreateTodoFailureSwag:
+    properties:
+      additional_info:
+        additionalProperties:
+          type: string
+        example:
+          error: Title is required
+        type: object
+      error:
+        example: BAD_REQUEST
+        type: string
+      message:
+        example: CREATE TODO FAIL
+        type: string
+      status:
+        example: 400
+        type: integer
+    type: object
   views.CreateTodoPayload:
     properties:
       created_at:
@@ -64,7 +82,7 @@ definitions:
           $ref: '#/definitions/views.GetTodoPayload'
         type: array
       status:
-        example: 201
+        example: 200
         type: integer
     type: object
 host: localhost:4444
@@ -129,6 +147,10 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/views.CreateTodoSuccessSwag'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/views.CreateTodoFailureSwag'
       summary: Create TODO
       tags:
       - TODOS
