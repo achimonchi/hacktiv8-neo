@@ -1,0 +1,94 @@
+basePath: /api/v1
+definitions:
+  controllers.PingSwag:
+    properties:
+      health:
+        example: ok
+        type: string
+    type: object
+  request.CreateTodo:
+    properties:
+      description:
+        example: Desc TODO
+        type: string
+      title:
+        example: Title TODO
+        type: string
+    type: object
+  views.CreateTodoPayload:
+    properties:
+      created_at:
+        type: string
+      description:
+        example: Desc TODO
+        type: string
+      id:
+        example: 1
+        type: integer
+      title:
+        example: Title TODO
+        type: string
+    type: object
+  views.CreateTodoSuccessSwag:
+    properties:
+      message:
+        example: CREATE TODO SUCCESS
+        type: string
+      payload:
+        $ref: '#/definitions/views.CreateTodoPayload'
+      status:
+        example: 201
+        type: integer
+    type: object
+host: localhost:4444
+info:
+  contact:
+    email: support@swagger.io
+    name: API Support
+    url: http://www.swagger.io/support
+  description: This is a sample server celler server.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: Hacktiv8 Swagger
+  version: "1.0"
+paths:
+  /ping:
+    get:
+      consumes:
+      - application/json
+      description: do ping
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controllers.PingSwag'
+      summary: ping example
+      tags:
+      - Health
+  /todos:
+    post:
+      consumes:
+      - application/json
+      description: create todo
+      parameters:
+      - description: Account ID
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/request.CreateTodo'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/views.CreateTodoSuccessSwag'
+      summary: Create TODO
+      tags:
+      - TODOS
+swagger: "2.0"
