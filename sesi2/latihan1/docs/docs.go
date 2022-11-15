@@ -49,6 +49,27 @@ const docTemplate = `{
             }
         },
         "/todos": {
+            "get": {
+                "description": "get all todos",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "TODOS"
+                ],
+                "summary": "Get All TODOS",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/views.GetTodosSuccessSwag"
+                        }
+                    }
+                }
+            },
             "post": {
                 "description": "create todo",
                 "consumes": [
@@ -63,7 +84,7 @@ const docTemplate = `{
                 "summary": "Create TODO",
                 "parameters": [
                     {
-                        "description": "Account ID",
+                        "description": "Request Body",
                         "name": "request",
                         "in": "body",
                         "required": true,
@@ -135,6 +156,45 @@ const docTemplate = `{
                 },
                 "payload": {
                     "$ref": "#/definitions/views.CreateTodoPayload"
+                },
+                "status": {
+                    "type": "integer",
+                    "example": 201
+                }
+            }
+        },
+        "views.GetTodoPayload": {
+            "type": "object",
+            "properties": {
+                "created_at": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string",
+                    "example": "Desc TODO"
+                },
+                "id": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "title": {
+                    "type": "string",
+                    "example": "Title TODO"
+                }
+            }
+        },
+        "views.GetTodosSuccessSwag": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string",
+                    "example": "CREATE TODO SUCCESS"
+                },
+                "payload": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/views.GetTodoPayload"
+                    }
                 },
                 "status": {
                     "type": "integer",

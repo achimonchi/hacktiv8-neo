@@ -10,6 +10,16 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// @BasePath /api/v1
+// GetTodos godoc
+// @Summary Get All TODOS
+// @Schemes
+// @Description get all todos
+// @Tags TODOS
+// @Accept json
+// @Produce json
+// @Success 200 {object} views.GetTodosSuccessSwag
+// @Router /todos [get]
 func GetAll(c *gin.Context) {
 
 }

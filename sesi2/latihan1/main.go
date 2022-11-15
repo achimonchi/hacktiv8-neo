@@ -27,8 +27,15 @@ import (
 func main() {
 	router := gin.Default()
 	v1 := router.Group("/api/v1")
-	v1.GET("/ping", controllers.Ping)
-	v1.POST("/todos", controllers.CreateTodo)
+	{
+		v1.GET("/ping", controllers.Ping)
+	}
+
+	todos := v1.Group("/todos")
+	{
+		todos.POST("", controllers.CreateTodo)
+		todos.GET("", controllers.GetAll)
+	}
 
 	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
 	router.Run(":4444")

@@ -40,6 +40,33 @@ definitions:
         example: 201
         type: integer
     type: object
+  views.GetTodoPayload:
+    properties:
+      created_at:
+        type: string
+      description:
+        example: Desc TODO
+        type: string
+      id:
+        example: 1
+        type: integer
+      title:
+        example: Title TODO
+        type: string
+    type: object
+  views.GetTodosSuccessSwag:
+    properties:
+      message:
+        example: CREATE TODO SUCCESS
+        type: string
+      payload:
+        items:
+          $ref: '#/definitions/views.GetTodoPayload'
+        type: array
+      status:
+        example: 201
+        type: integer
+    type: object
 host: localhost:4444
 info:
   contact:
@@ -70,12 +97,26 @@ paths:
       tags:
       - Health
   /todos:
+    get:
+      consumes:
+      - application/json
+      description: get all todos
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/views.GetTodosSuccessSwag'
+      summary: Get All TODOS
+      tags:
+      - TODOS
     post:
       consumes:
       - application/json
       description: create todo
       parameters:
-      - description: Account ID
+      - description: Request Body
         in: body
         name: request
         required: true
