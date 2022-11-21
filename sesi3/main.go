@@ -7,9 +7,9 @@ import (
 
 func main() {
 	var user1 = models.User{
-		Id:       "U1",
-		Name:     "Hacktiv8",
-		Password: "hacktiv8",
+		Id:       "U2",
+		Name:     "Bank Neo",
+		Password: "bankneo",
 		Gender:   models.UserGender_MALE,
 	}
 
