@@ -57,6 +57,11 @@ func AuthUsingLDAP(username, password string) (bool, *UserLDAPData, error) {
 
 	entry := sr.Entries[0]
 
+	err = listen.Bind(entry.DN, password)
+	if err != nil {
+		return false, nil, nil
+	}
+
 	fmt.Printf("%+v\n", entry)
 
 	data := new(UserLDAPData)
