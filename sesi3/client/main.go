@@ -6,8 +6,8 @@ import (
 	"log"
 	"sesi3/config"
 	"sesi3/models"
+	"time"
 
-	"github.com/golang/protobuf/ptypes/empty"
 	"google.golang.org/grpc"
 )
 
@@ -35,6 +35,14 @@ func connection(port string, opts ...grpc.DialOption) *grpc.ClientConn {
 	return conn
 }
 
+func register(ctx context.Context, user models.UsersClient) {
+	newCtx, ctxCancel := context.WithTimeout(ctx, 1*time.Second)
+	defer ctxCancel()
+
+	user.Register(newCtx, nil)
+
+}
+
 func main() {
 	var user1 = models.User{
 		Id:       "U2",
@@ -45,15 +53,15 @@ func main() {
 
 	ctx := context.Background()
 
-	user := registerUserServices()
-	user.Register(ctx, &user1)
+	// user := registerUserServices()
+	// user.Register(ctx, &user1)
 
-	list, err := user.List(ctx, new(empty.Empty))
-	if err != nil {
-		log.Fatal(err.Error())
-	}
+	// list, err := user.List(ctx, new(empty.Empty))
+	// if err != nil {
+	// 	log.Fatal(err.Error())
+	// }
 
-	fmt.Println(list)
+	// fmt.Println(list)
 
 	garage := registerGarageServer()
 

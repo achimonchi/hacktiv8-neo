@@ -24,6 +24,6 @@ func main() {
 func goroutine(msg chan string, msgErr chan error) {
 	fmt.Println("Ini dari goroutine")
 
-	// msgErr <- fmt.Errorf("ini error dari goroutine")
+	msgErr <- fmt.Errorf("ini error dari goroutine")
 	msg <- "Ini success dari goroutine"
 }
