@@ -28,6 +28,10 @@ func main() {
 		session.Values["name"] = "Hacktiv8"
 		session.Values["age"] = "24"
 
+		// set expire time for session
+		// in seconds
+		session.Options.MaxAge = 10
+
 		// store session
 		err := session.Save(c.Request(), c.Response())
 		if err != nil {
