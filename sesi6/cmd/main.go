@@ -2,9 +2,9 @@ package main
 
 import (
 	"net/http"
+	"sesi6/db"
 
-	"github.com/gorilla/securecookie"
-	"github.com/gorilla/sessions"
+	"github.com/gorilla/context"
 	"github.com/labstack/echo/v4"
 )
 
@@ -18,9 +18,17 @@ func main() {
 	// proses pembuatan key
 	// expect jangan diletakin di hardcode
 	// prefer gunain env file / file config lainnya
-	key := securecookie.GenerateRandomKey(32)
+	// key := securecookie.GenerateRandomKey(32)
 	// proses pembuatan session cookiestore
-	store := sessions.NewCookieStore(key)
+	// store := sessions.NewCookieStore(key)
+	dbPostgres, _ := db.NewPostgres()
+
+	store, _ := db.NewPostgresStore(dbPostgres)
+	store.Options.MaxAge = 10
+
+	// should be used
+	// untuk menghindari memori leak
+	e.Use(echo.WrapMiddleware(context.ClearHandler))
 
 	e.GET("/set", func(c echo.Context) error {
 		// get session by session_id
@@ -30,7 +38,9 @@ func main() {
 
 		// set expire time for session
 		// in seconds
-		session.Options.MaxAge = 10
+		// session.Options.MaxAge = 10
+		// session.Options.Secure = true
+		// session.Options.HttpOnly = true
 
 		// store session
 		err := session.Save(c.Request(), c.Response())
