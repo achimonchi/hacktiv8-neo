@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"net/http"
 	"sesi6/db"
 
@@ -21,9 +22,10 @@ func main() {
 	// key := securecookie.GenerateRandomKey(32)
 	// proses pembuatan session cookiestore
 	// store := sessions.NewCookieStore(key)
-	dbPostgres, _ := db.NewPostgres()
+	// dbPostgres, _ := db.NewPostgres()
 
-	store, _ := db.NewPostgresStore(dbPostgres)
+	// store, _ := db.NewPostgresStore(dbPostgres)
+	store, _ := db.NewRedisStore()
 	store.Options.MaxAge = 10
 
 	// should be used
@@ -31,9 +33,10 @@ func main() {
 	e.Use(echo.WrapMiddleware(context.ClearHandler))
 
 	e.GET("/set", func(c echo.Context) error {
+		query := c.QueryParam("name")
 		// get session by session_id
 		session, _ := store.Get(c.Request(), SESSION_ID)
-		session.Values["name"] = "Hacktiv8"
+		session.Values["name"] = query
 		session.Values["age"] = "24"
 
 		// set expire time for session
@@ -45,6 +48,7 @@ func main() {
 		// store session
 		err := session.Save(c.Request(), c.Response())
 		if err != nil {
+			fmt.Println("Error", err)
 			return echo.NewHTTPError(http.StatusBadRequest, err.Error())
 		}
 		return c.JSON(http.StatusOK, M{

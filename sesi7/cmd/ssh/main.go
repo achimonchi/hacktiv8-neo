@@ -58,9 +58,7 @@ func main() {
 	}
 
 	commands := []string{
-		"mkdir reyhan",
-		"cd reyhan",
-		"echo '#from Reyhan' >> readme.md",
+		"docker run -d --name nginx-reyhan -v $PWD/reyhan:/usr/share/nginx/html -p 80:80 nginx",
 		"exit",
 	}
 

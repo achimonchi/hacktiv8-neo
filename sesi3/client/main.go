@@ -8,6 +8,7 @@ import (
 	"sesi3/models"
 	"time"
 
+	"github.com/golang/protobuf/ptypes/empty"
 	"google.golang.org/grpc"
 )
 
@@ -53,38 +54,38 @@ func main() {
 
 	ctx := context.Background()
 
-	// user := registerUserServices()
-	// user.Register(ctx, &user1)
+	user := registerUserServices()
+	user.Register(ctx, &user1)
 
-	// list, err := user.List(ctx, new(empty.Empty))
-	// if err != nil {
-	// 	log.Fatal(err.Error())
-	// }
-
-	// fmt.Println(list)
-
-	garage := registerGarageServer()
-
-	var req = &models.GarageAndUserId{
-		UserId: user1.Id,
-		Garage: &models.Garage{
-			Id:   "G1",
-			Name: "Garage 1",
-			Coordinate: &models.GarageCoordinate{
-				Latitude:  32.001,
-				Longitude: 94.001,
-			},
-		},
-	}
-	garage.Add(ctx, req)
-
-	listGarage, err := garage.List(ctx, &models.GarageUserId{
-		UserId: req.UserId,
-	})
+	list, err := user.List(ctx, new(empty.Empty))
 	if err != nil {
 		log.Fatal(err.Error())
 	}
 
-	fmt.Println(listGarage)
+	fmt.Println(list)
+
+	// garage := registerGarageServer()
+
+	// var req = &models.GarageAndUserId{
+	// 	UserId: user1.Id,
+	// 	Garage: &models.Garage{
+	// 		Id:   "G1",
+	// 		Name: "Garage 1",
+	// 		Coordinate: &models.GarageCoordinate{
+	// 			Latitude:  32.001,
+	// 			Longitude: 94.001,
+	// 		},
+	// 	},
+	// }
+	// garage.Add(ctx, req)
+
+	// listGarage, err := garage.List(ctx, &models.GarageUserId{
+	// 	UserId: req.UserId,
+	// })
+	// if err != nil {
+	// 	log.Fatal(err.Error())
+	// }
+
+	// fmt.Println(listGarage)
 
 }
