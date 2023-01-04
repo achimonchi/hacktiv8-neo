@@ -3,7 +3,9 @@ package main
 import (
 	"fmt"
 	"html/template"
+	"log"
 	"net/http"
+	"sesi9/application/handler"
 
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
@@ -44,5 +46,20 @@ func main() {
 		return ctx.JSON(http.StatusOK, data)
 	})
 
+	handler := handler.NewAuthHandler()
+
+	e.POST("/auth/register", handler.Register)
+	e.POST("/auth/login", handler.Login)
+	e.GET("/auth", handler.GetAll, CheckClientId())
+
 	e.Logger.Fatal(e.Start(":4444"))
+}
+
+func CheckClientId() echo.MiddlewareFunc {
+	return func(next echo.HandlerFunc) echo.HandlerFunc {
+		return func(ctx echo.Context) error {
+			log.Println("Hello")
+			return next(ctx)
+		}
+	}
 }
