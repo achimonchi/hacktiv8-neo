@@ -6,4 +6,4 @@ type Auth struct {
 	Password string
 }
 
-var authData = []Auth{}
+var AuthData = []Auth{}
