@@ -1,0 +1,12 @@
+{
+    "app" :{
+        "name" : "Config Application",
+        "port" : "5555",
+        "debugLevel" : "warn"
+    },
+    "gmap" : {
+        "ssh" : "",
+        "apiKey" : "",
+        "secretKey" : ""
+    }
+}
