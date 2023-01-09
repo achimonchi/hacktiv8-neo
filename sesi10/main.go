@@ -6,6 +6,7 @@ import (
 	"crypto/tls"
 	"crypto/x509"
 	"fmt"
+	"log"
 	"net/http"
 	"net/url"
 	"sesi10/config"
@@ -33,6 +34,7 @@ func main() {
 	))
 
 	port := fmt.Sprintf(":%s", config.WebServerPort)
+	log.Println("server running on port :5555")
 	http.ListenAndServe(port, nil)
 }
 

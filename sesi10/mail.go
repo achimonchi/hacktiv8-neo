@@ -6,6 +6,7 @@ import (
 	"crypto/tls"
 	"crypto/x509"
 	"fmt"
+	"log"
 	"net/http"
 	"net/url"
 	"sesi10/config"
@@ -16,7 +17,8 @@ import (
 func main() {
 	sp, err := samlMiddleware()
 	if err != nil {
-		panic(err)
+		log.Fatal(err)
+		return
 	}
 	http.Handle("/saml/", sp)
 
@@ -32,6 +34,7 @@ func main() {
 		}),
 	))
 
+	log.Println("server running on port :5555")
 	port := fmt.Sprintf(":%s", "5555")
 	http.ListenAndServe(port, nil)
 }
@@ -39,11 +42,13 @@ func main() {
 func samlMiddleware() (*samlsp.Middleware, error) {
 	keyPair, err := tls.LoadX509KeyPair(config.SamlCertificatePath, config.SamlPrivateKeyPath)
 	if err != nil {
+		fmt.Println("err when key pair")
 		return nil, err
 	}
 
 	keyPair.Leaf, err = x509.ParseCertificate(keyPair.Certificate[0])
 	if err != nil {
+		fmt.Println("err when pare certificate")
 		return nil, err
 	}
 
@@ -54,6 +59,7 @@ func samlMiddleware() (*samlsp.Middleware, error) {
 
 	idpMetadata, err := samlsp.FetchMetadata(context.Background(), http.DefaultClient, *idpMedatadaURL)
 	if err != nil {
+		fmt.Println("err when fetch metadata")
 		return nil, err
 	}
 
@@ -69,6 +75,7 @@ func samlMiddleware() (*samlsp.Middleware, error) {
 		IDPMetadata: idpMetadata,
 	})
 	if err != nil {
+		fmt.Println("err when create saml")
 		return nil, err
 	}
 	return middle, nil
