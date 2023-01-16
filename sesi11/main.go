@@ -9,7 +9,7 @@ import (
 )
 
 func main() {
-	router := gin.New()
+	router := gin.Default()
 
 	router.GET("/health", func(ctx *gin.Context) {
 		ctx.JSON(http.StatusOK, gin.H{
