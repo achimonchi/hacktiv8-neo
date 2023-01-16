@@ -1,7 +1,6 @@
 package helper
 
 import (
-	"runtime"
 	"testing"
 
 	"github.com/stretchr/testify/require"
@@ -28,17 +27,31 @@ func TestCubeKeliling(t *testing.T) {
 
 func init() {
 
-	runtime.GOMAXPROCS(2)
+	// runtime.GOMAXPROCS(2)
 }
 func BenchmarkVolumePtr(b *testing.B) {
+	cube := NewCubePtr(10)
 	for i := 0; i < b.N; i++ {
-		NewCubePtr(10).VolumePtr()
+		cube.VolumePtr()
 	}
 
 }
 func BenchmarkVolume(b *testing.B) {
+	cube := NewCube(10)
 	for i := 0; i < b.N; i++ {
-		NewCube(10).Volume()
+		cube.Volume()
+	}
+}
+
+func BenchmarkLuasPtr(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		NewCubePtr(10).LuasPtr()
 	}
 
+}
+
+func BenchmarkLuas(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		NewCube(10).Luas()
+	}
 }
