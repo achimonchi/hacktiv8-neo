@@ -1,5 +1,6 @@
 # base image
-FROM golang:1.19-alpine 
+# multi stage
+FROM golang:1.19-alpine as builder
 
 # setup working directory
 # /app
@@ -13,6 +14,13 @@ RUN go mod tidy
 
 # build golang apps to binary file
 RUN go build -o binary main.go
+
+# deployment stage
+FROM alpine
+
+WORKDIR /app
+
+COPY --from=builder /app/binary binary
 
 # running binary file
 CMD [ "/app/binary" ]

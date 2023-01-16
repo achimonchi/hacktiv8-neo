@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"net/http"
 	"os"
-	"sesi11/pkg"
 
 	"github.com/gin-gonic/gin"
 )
@@ -18,14 +17,14 @@ func main() {
 		})
 	})
 
-	db, err := pkg.ConnectDB()
-	if err != nil {
-		panic(err)
-	}
+	// db, err := pkg.ConnectDB()
+	// if err != nil {
+	// 	panic(err)
+	// }
 
-	if db != nil {
-		fmt.Println("db connected")
-	}
+	// if db != nil {
+	// 	fmt.Println("db connected")
+	// }
 
 	port := os.Getenv("PORT")
 	if port == "" {
